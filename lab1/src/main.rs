@@ -1,6 +1,9 @@
 fn is_prime(x: u32) -> bool {
     let mut i: u32 = 2;
 
+    if x == 0 {
+        return false;
+    }
     while i <= { x / 2 } {
         if x % i == 0 {
             return false;
@@ -21,36 +24,28 @@ fn is_coprime(x: u32, y: u32) -> bool {
         copy_x = r;
     }
 
-    if copy_y == 1 {
-        return true;
-    }
-    return false;
+    return copy_y == 1;
 }
 
 fn main() {
-    let mut x: u32 = 1;
+    let mut x: u32 = 0;
     let mut y: u32;
     println!("Problem 1: \n \n");
-    loop {
+    while x <= 100 {
         if is_prime(x) == true {
             println!("Number {} is prime\n", x);
         } else {
             println!("Number {} is not prime\n", x);
         }
-
         x += 1;
-        if x == 101 {
-            break;
-        }
     }
 
     print!("\n\n Problem 2 \n\n");
-    x = 1;
+    x = 0;
 
-    loop {
+    while x <= 100 {
         y = x + 1;
-
-        loop {
+        while y <= 100 {
             if y > 100 {
                 break;
             }
@@ -66,16 +61,13 @@ fn main() {
             }
         }
         x += 1;
-        if x == 101 {
-            break;
-        }
     }
 
     print!("\n\n Problem 3 \n\n");
 
     x = 99;
 
-    loop {
+    while x != 0 {
         print!(
             "{x} bottles of beer on the wall,\n{x} bottles of beer.\nTake one down, pass it around,\n"
         );
