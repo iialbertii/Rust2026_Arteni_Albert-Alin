@@ -11,7 +11,7 @@ fn is_prime(x: u32) -> bool {
         i += 1;
     }
 
-    return true;
+    true
 }
 
 fn is_coprime(x: u32, y: u32) -> bool {
@@ -24,7 +24,7 @@ fn is_coprime(x: u32, y: u32) -> bool {
         copy_x = r;
     }
 
-    return copy_y == 1;
+    copy_y == 1
 }
 
 fn main() {
@@ -32,7 +32,7 @@ fn main() {
     let mut y: u32;
     println!("Problem 1: \n \n");
     while x <= 100 {
-        if is_prime(x) == true {
+        if is_prime(x) {
             println!("Number {} is prime\n", x);
         } else {
             println!("Number {} is not prime\n", x);
@@ -49,7 +49,7 @@ fn main() {
             if y > 100 {
                 break;
             }
-            if is_coprime(x, y) == true {
+            if is_coprime(x, y) {
                 println!("Numbers x: {} y: {} is coprime\n", x, y);
             } else {
                 println!("Number x:{} y: {} is not coprime\n", x, y);
