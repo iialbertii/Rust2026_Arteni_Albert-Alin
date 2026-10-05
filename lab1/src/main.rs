@@ -5,7 +5,7 @@ fn is_prime(x: u32) -> bool {
         return false;
     }
     while i <= { x / 2 } {
-        if x % i == 0 {
+        if x.is_multiple_of(i) {
             return false;
         }
         i += 1;
