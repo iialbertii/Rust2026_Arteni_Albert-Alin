@@ -23,29 +23,27 @@ fn add_str(x: &mut String, y: String) {
 }
 
 fn add_integer(x: &mut String, mut integerr: i32) {
-    let sign:i32 = if integerr>=0 {1} else {-1};
-    let mut integerr_rev:String= String::from("");
-    let mut add_underscore:u8=0;
-    integerr= if sign==1 {integerr} else {-integerr};
-    while integerr!=0{
-        if add_underscore==3{
-            integerr_rev+="_";
-            add_underscore=0;
+    let sign: i32 = if integerr >= 0 { 1 } else { -1 };
+    let mut integerr_rev: String = String::from("");
+    let mut add_underscore: u8 = 0;
+    integerr = if sign == 1 { integerr } else { -integerr };
+    while integerr != 0 {
+        if add_underscore == 3 {
+            integerr_rev += "_";
+            add_underscore = 0;
         }
-        let c=(integerr%10) as u8;
-        integerr_rev+=&String::from(( c + b'0') as char) ;
-        integerr/=10i32;
-        add_underscore+=1;
+        let c = (integerr % 10) as u8;
+        integerr_rev += &String::from((c + b'0') as char);
+        integerr /= 10i32;
+        add_underscore += 1;
     }
-    *x+= if sign==-1i32 {"-"} else {""};
-    for i in integerr_rev.chars().rev(){
+    *x += if sign == -1i32 { "-" } else { "" };
+    for i in integerr_rev.chars().rev() {
         x.push(i);
     }
 }
 
-fn add_float(x: &mut String, floatt: f32) {
-
-}
+fn add_float(x: &mut String, floatt: f32) {}
 
 fn main() {
     let mut s = String::from("");
@@ -67,7 +65,4 @@ fn main() {
     add_integer(&mut s, 9100);
 
     println!("{}", s);
-
-
-
 }
