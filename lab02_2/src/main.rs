@@ -23,7 +23,7 @@ fn count_char(s: &str, c: char) -> usize {
 fn first_word(s: &str) -> &str {
     let sbytes = s.as_bytes();
     let mut index: usize = 0;
-    while index < s.len() && sbytes[index] != b' '  {
+    while index < s.len() && sbytes[index] != b' ' {
         index += 1;
     }
     &s[0..index]
@@ -104,23 +104,21 @@ fn make_note(title: &str, body: &str) -> Note {
 
 // Number of words in the body, counted by hand with chars().
 fn word_count(note: &Note) -> usize {
-    let mut count_words:usize=0;
-    let mut word=false;
+    let mut count_words: usize = 0;
+    let mut word = false;
 
-
-    for c in note.body.chars(){
-        if c != ' '{
-            word=true;
-
-        }else {
-            if word==true {
-                word=false;
-                count_words+=1;
+    for c in note.body.chars() {
+        if c != ' ' {
+            word = true;
+        } else {
+            if word {
+                word = false;
+                count_words += 1;
             }
         }
     }
-    if !note.body.is_empty(){
-        count_words+=1;
+    if !note.body.is_empty() {
+        count_words += 1;
     }
 
     count_words
@@ -129,20 +127,20 @@ fn word_count(note: &Note) -> usize {
 // Add `text` to the end of the body, separated by one space
 // (no leading space if the body is empty).
 fn append(note: &mut Note, text: &str) {
-    if note.body.is_empty(){
-        note.body=String::from(text);
-        return
+    if note.body.is_empty() {
+        note.body = String::from(text);
+        return;
     }
     note.body.push(' ');
-    note.body+=text;
+    note.body += text;
 }
 
 // Use the note up and return "[ARCHIVED] <title>: <body>".
 fn archive(note: Note) -> String {
-    let mut archived_note:String = String::from("[ARCHIVED] ");
-    archived_note+=&note.title;
-    archived_note+=&String::from(": ");
-    archived_note+=&note.body;
+    let mut archived_note: String = String::from("[ARCHIVED] ");
+    archived_note += &note.title;
+    archived_note += &String::from(": ");
+    archived_note += &note.body;
 
     archived_note
 }
@@ -150,12 +148,12 @@ fn archive(note: Note) -> String {
 // Combine two notes. The first is consumed and reused, the second is only read.
 // Title becomes "<a>+<b>", body becomes "<a body> <b body>".
 fn merge(a: Note, b: &Note) -> Note {
-    let mut a =a;
-        a.title+=&"+".to_string();
-        a.title+=&b.title;
-        a.body+=&" ".to_string();
-        a.body+=&b.body;
-    a   
+    let mut a = a;
+    a.title += &'+'.to_string();
+    a.title += &b.title;
+    a.body += &' '.to_string();
+    a.body += &b.body;
+    a
 }
 
 fn main() {
