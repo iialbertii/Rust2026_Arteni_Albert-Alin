@@ -23,7 +23,7 @@ fn count_char(s: &str, c: char) -> usize {
 fn first_word(s: &str) -> &str {
     let sbytes = s.as_bytes();
     let mut index: usize = 0;
-    while sbytes[index] != b' ' && index < s.len() - 1 {
+    while index < s.len() && sbytes[index] != b' '  {
         index += 1;
     }
     &s[0..index]
@@ -41,13 +41,13 @@ fn reverse(s: &str) -> String {
 // True if `s` reads the same backwards. Reuse reverse().
 fn is_palindrome(s: &str) -> bool {
     let copy_s: String = String::from(s);
-    return *copy_s == reverse(s);
+    *copy_s == reverse(s)
 }
 
 // A new String made of `s` repeated n times.
 fn repeat_str(s: &str, n: usize) -> String {
     let mut repeated_s = String::new();
-    for i in 0..n {
+    for _ in 0..n {
         for c in s.chars() {
             repeated_s.push(c);
         }
@@ -82,18 +82,14 @@ fn censor(s: &mut String, c: char) {
 
 // Take a string, make it uppercase, and give it back.
 fn shout(s: String) -> String {
-    let mut shout_s = String::from(s);
+    let mut shout_s = s;
     shout_s.make_ascii_uppercase();
     shout_s
 }
 
 // Take two strings and return the longer one (the first on a tie). The other is dropped.
 fn longer_of(a: String, b: String) -> String {
-    if a.len() >= b.len() {
-        return a;
-    } else {
-        return b;
-    }
+    if a.len() >= b.len() { a } else { b }
 }
 
 // ---------- Part 4: Notebook (a struct that owns its strings) ----------
@@ -108,24 +104,58 @@ fn make_note(title: &str, body: &str) -> Note {
 
 // Number of words in the body, counted by hand with chars().
 fn word_count(note: &Note) -> usize {
-    todo!()
+    let mut count_words:usize=0;
+    let mut word=false;
+
+
+    for c in note.body.chars(){
+        if c != ' '{
+            word=true;
+
+        }else {
+            if word==true {
+                word=false;
+                count_words+=1;
+            }
+        }
+    }
+    if !note.body.is_empty(){
+        count_words+=1;
+    }
+
+    count_words
 }
 
 // Add `text` to the end of the body, separated by one space
 // (no leading space if the body is empty).
 fn append(note: &mut Note, text: &str) {
-    todo!()
+    if note.body.is_empty(){
+        note.body=String::from(text);
+        return
+    }
+    note.body.push(' ');
+    note.body+=text;
 }
 
 // Use the note up and return "[ARCHIVED] <title>: <body>".
 fn archive(note: Note) -> String {
-    todo!()
+    let mut archived_note:String = String::from("[ARCHIVED] ");
+    archived_note+=&note.title;
+    archived_note+=&String::from(": ");
+    archived_note+=&note.body;
+
+    archived_note
 }
 
 // Combine two notes. The first is consumed and reused, the second is only read.
 // Title becomes "<a>+<b>", body becomes "<a body> <b body>".
 fn merge(a: Note, b: &Note) -> Note {
-    todo!()
+    let mut a =a;
+        a.title+=&"+".to_string();
+        a.title+=&b.title;
+        a.body+=&" ".to_string();
+        a.body+=&b.body;
+    a   
 }
 
 fn main() {
@@ -156,13 +186,13 @@ fn main() {
     let title = String::from("shopping");
     let mut n1 = make_note(&title, "milk");
     let n2 = make_note("ideas", "learn rust borrowing");
-    // println!("{title}");
-    // println!("{} word(s)", word_count(&n1));
-    // append(&mut n1, "eggs");
-    // append(&mut n1, "bread");
-    // println!("{}: {}", n1.title, n1.body);
-    // let merged = merge(n1, &n2);
-    // println!("{}: {}", merged.title, merged.body);
-    // println!("{} word(s)", word_count(&merged));
-    // println!("{}", archive(n2));
+    println!("{title}");
+    println!("{} word(s)", word_count(&n1));
+    append(&mut n1, "eggs");
+    append(&mut n1, "bread");
+    println!("{}: {}", n1.title, n1.body);
+    let merged = merge(n1, &n2);
+    println!("{}: {}", merged.title, merged.body);
+    println!("{} word(s)", word_count(&merged));
+    println!("{}", archive(n2));
 }
