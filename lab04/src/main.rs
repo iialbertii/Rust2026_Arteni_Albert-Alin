@@ -1,4 +1,4 @@
-use std::{fs, io};
+use std::fs;
 const ABBREV: [(&str, &str); 4] = [
     ("pentru", "pt"),
     ("pentru", " ptr"),
@@ -97,22 +97,21 @@ fn main() {
             return;
         }
     };
-    for line in s4.lines(){
-        let mut ip_addr=String::from(" => ");
-        let mut step:bool=true;
-        for word in line.split(' '){
-            if word=="#"{
-             break;
+    for line in s4.lines() {
+        let mut ip_addr = String::from(" => ");
+        let mut step: bool = true;
+        for word in line.split(' ') {
+            if word == "#" {
+                break;
             }
-            match step{
-                true=>  ip_addr.push_str(word),
-                false=> ip_addr.insert_str(0,word ),
+            match step {
+                true => ip_addr.push_str(word),
+                false => ip_addr.insert_str(0, word),
             }
-            step= !step;
+            step = !step;
         }
-        if ip_addr!=" => "{
-             println!("{ip_addr}");
+        if ip_addr != " => " {
+            println!("{ip_addr}");
         }
     }
-
 }
