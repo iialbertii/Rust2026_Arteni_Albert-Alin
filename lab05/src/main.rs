@@ -1,4 +1,4 @@
-use serde::de::value::Error;
+
 use serde_derive::Deserialize;
 use std::fs;
 
@@ -55,7 +55,7 @@ fn p1() {
     let content = match fs::read_to_string("./example/students.in") {
         Ok(c) => c,
         Err(e) => {
-            println!("Cannot read students.txt: {e}");
+            println!("Cannot read students.in: {e}");
             return;
         }
     };
@@ -150,7 +150,12 @@ fn p2() {
 
 fn p3() {
     let students = match fs::read_to_string("./example/students.json") {
-        Ok(c ) => p3_deserialiez(c),
+        Ok(c ) =>match p3_deserialiez(c){
+            Ok(s)=> s,
+            Err(_)=> {
+                return;
+            }
+        },
         Err(e) => {
             println!("Cannot read students.json: {e}");
             return;
@@ -160,18 +165,10 @@ fn p3() {
 
     let mut oldest: Option<Student> = None;
     let mut youngest: Option<Student> = None;
-    let mut line_number = 0;
 
-    for line in students.iter() {
-        line_number += 1;
-        if line.is_empty() {
-            continue;
-        }
-        let parsed: Result<Student, serde_json::Error>;
-        match parsed {
-            Ok(s) => update(&mut oldest, &mut youngest, s),
-            Err(e) => println!("Skipping invalid line {line_number}: {e}"),
-        }
+   
+    for s in students {
+        update(&mut oldest, &mut youngest, s);
     }
 
     print_result(oldest, youngest);
@@ -190,9 +187,9 @@ fn p3_deserialiez(content:String)->Result<[Student;4],serde_json::Error>{
 
 
 fn main() {
-    //p1();
+    p1();
 
-    //p2();
+    p2();
 
     p3();
 }
